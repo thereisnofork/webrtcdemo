@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/thereisnofork/webrtcdemo/static/css/main.073c9b0a.css",
+    "main.js": "/thereisnofork/webrtcdemo/static/js/main.f91b9976.js",
+    "static/js/787.fb7c2f22.chunk.js": "/thereisnofork/webrtcdemo/static/js/787.fb7c2f22.chunk.js",
+    "index.html": "/thereisnofork/webrtcdemo/index.html",
+    "main.073c9b0a.css.map": "/thereisnofork/webrtcdemo/static/css/main.073c9b0a.css.map",
+    "main.f91b9976.js.map": "/thereisnofork/webrtcdemo/static/js/main.f91b9976.js.map",
+    "787.fb7c2f22.chunk.js.map": "/thereisnofork/webrtcdemo/static/js/787.fb7c2f22.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.073c9b0a.css",
+    "static/js/main.f91b9976.js"
+  ]
+}
