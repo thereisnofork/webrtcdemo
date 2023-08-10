@@ -11,7 +11,15 @@ const servers = {
   iceCandidatePoolSize: 10,
 };
 
-const lc = new RTCPeerConnection(servers);
+const pc = new RTCPeerConnection(servers);
+
+pc.onconnectionstatechange = (e) => {
+  console.log("🚀 onconnectionstatechange:", e);
+  console.log(
+    "🚀--------->  pc.iceConnectionState: ------>",
+    pc.iceConnectionState
+  );
+};
 
 function App() {
   const [textareaValue, setTextareaValue] = useState("");
@@ -20,7 +28,8 @@ function App() {
 
   const onHostClicked = () => {
     setStatus("host");
-    const dc = lc.createDataChannel("channel");
+    const dc = pc.createDataChannel("channel");
+    console.log("🚀  onHostClicked  dc:", dc);
 
     dc.onopen = (e) => {
       console.log("🚀 onopen:");
@@ -30,14 +39,14 @@ function App() {
       console.log("🚀 // e.data:", e.data);
     };
 
-    lc.onicecandidate = (e) => {
+    pc.onicecandidate = (e) => {
       console.log("🚀  onicecandidate  e:", e);
-      setOfferToken(JSON.stringify(lc.localDescription));
+      setOfferToken(JSON.stringify(pc.localDescription));
     };
 
-    lc.createOffer()
-      .then((offer) => lc.setLocalDescription(offer))
-      .then(() => console.log("set successfully"))
+    pc.createOffer()
+      .then((offer) => pc.setLocalDescription(offer))
+      .then(() => console.log("set ofert to setLocalDescription"))
       .catch((err) => console.log(err));
   };
 
@@ -46,12 +55,12 @@ function App() {
   const onClientClicked = () => {
     setStatus("client");
 
-    lc.onicecandidate = (e) => {
+    pc.onicecandidate = (e) => {
       console.log("🚀  onicecandidate.  e:", e);
-      setOfferToken(JSON.stringify(lc.localDescription));
+      setOfferToken(JSON.stringify(pc.localDescription));
     };
 
-    lc.ondatachannel = (e) => {
+    pc.ondatachannel = (e) => {
       console.log("🚀 .ondatachannel  e:", e);
 
       e.channel.onmessage = (e) => {
@@ -71,19 +80,19 @@ function App() {
       e.preventDefault();
       const recivedToken = JSON.parse(e.target.value);
 
-      lc.setRemoteDescription(recivedToken)
+      pc.setRemoteDescription(recivedToken)
         .then((e) => {
           console.log("🚀 setRemoteDescription ");
         })
         .catch((err) => console.log(err));
 
       if (status === "client") {
-        lc.createAnswer()
+        pc.createAnswer()
           .then((answer) => {
             console.log("🚀 .then answer:", answer);
             setOfferToken(JSON.stringify(answer));
 
-            return lc.setLocalDescription(answer);
+            return pc.setLocalDescription(answer);
           })
           .catch((err) => console.log(err));
       }
