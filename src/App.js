@@ -53,14 +53,13 @@ function App() {
 
     lc.ondatachannel = (e) => {
       console.log("🚀 .ondatachannel  e:", e);
-      lc.dc = e.channel;
 
       e.channel.onmessage = (e) => {
         console.log("🚀 .e.channel  e:", e.data);
       };
 
       e.channel.onopen = (e) => {
-        console.log("🚀 .onopen e:", e);
+        console.log("🚀 .onopen e:");
       };
     };
   };
@@ -70,26 +69,18 @@ function App() {
   const onTextareaSubmit = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      if (status === "host") {
-        const recivedAnswer = JSON.parse(e.target.value);
+      const recivedToken = JSON.parse(e.target.value);
 
-        lc.setRemoteDescription(recivedAnswer)
-          .then((e) => {
-            console.log("🚀  .then  e:", e);
-          })
-          .catch((err) => console.log(err));
-      } else {
-        const recivedOffer = JSON.parse(e.target.value);
+      lc.setRemoteDescription(recivedToken)
+        .then((e) => {
+          console.log("🚀 setRemoteDescription ");
+        })
+        .catch((err) => console.log(err));
 
-        lc.setRemoteDescription(recivedOffer)
-          .then(() => {
-            console.log("🚀  .then recivedOffer set e:");
-          })
-          .catch((err) => console.log(err));
-
+      if (status === "client") {
         lc.createAnswer()
           .then((answer) => {
-            console.log("🚀  .then  answer:", answer);
+            console.log("🚀 .then answer:", answer);
             setOfferToken(JSON.stringify(answer));
 
             return lc.setLocalDescription(answer);
