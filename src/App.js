@@ -118,15 +118,17 @@ function App() {
         </>
       )}
 
-      <form>
-        <textarea
-          value={textareaValue}
-          className=""
-          onChange={onTextareChanges}
-          onKeyDown={onTextareaSubmit}
-          style={{ height: 300, width: 300, margin: 20 }}
-        />
-      </form>
+      {status && (
+        <form>
+          <textarea
+            value={textareaValue}
+            className=""
+            onChange={onTextareChanges}
+            onKeyDown={onTextareaSubmit}
+            style={{ height: 300, width: 300, margin: 20 }}
+          />
+        </form>
+      )}
 
       <div style={{ height: 300, width: 300, margin: 20 }}>{offerToken}</div>
     </div>
